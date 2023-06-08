@@ -1,0 +1,45 @@
+#include<LiquidCrystal.h>
+LiquidCrystal lcd(8,9,10,11,12,13);
+const int Green=2;
+const int Red=3;
+const int ir=5;
+int buzzer=6;
+int v;
+void setup()
+{
+  Serial.begin(9600);
+  lcd.begin(16,2);
+  pinMode(Green,OUTPUT);
+  pinMode(Red,OUTPUT);
+  pinMode(ir,INPUT);
+  pinMode(buzzer,OUTPUT);
+}
+void loop()
+{
+  v=digitalRead(ir);
+  if(v==HIGH)
+  {
+    Serial.println("SOMETHING WENT WRONG");
+    delay(3000);
+    digitalWrite(Red,HIGH);
+    delay(1000);
+    digitalWrite(Green,LOW);
+    delay(1000);
+    digitalWrite(buzzer,HIGH);
+    lcd.setCursor(4,1);
+    lcd.print("WARNING...!!!");
+    
+   }
+   else
+   {
+    Serial.println("EVERYTHING HAPPENING ASUSUAL");
+    delay(3000);
+    digitalWrite(Green,HIGH);
+    delay(1000);
+    digitalWrite(Red,LOW);
+    delay(1000);
+    digitalWrite(buzzer,LOW);
+    lcd.setCursor(4,1);
+    lcd.print("YOU ARE SAFE");
+   }
+}
